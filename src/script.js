@@ -28,6 +28,27 @@ let shopItemsDatabase = [
         desc: "decricao do produto 4",
         price: 85,
         image: "img/p5.jpg"
+    },
+    {
+        id: "item5",
+        name: "sapato 5",
+        desc: "decricao do produto 5",
+        price: 85,
+        image: "img/p8.jpg"
+    },
+    {
+        id: "item6",
+        name: "sapato 6",
+        desc: "decricao do produto 6",
+        price: 85,
+        image: "img/p4.jpg"
+    },
+    {
+        id: "item7",
+        name: "sapato 7",
+        desc: "decricao do produto 7",
+        price: 85,
+        image: "img/p7.jpg"
     }
 ]
 
@@ -56,7 +77,7 @@ let populateShop = () => {
                 </div>
             </div>
        `
-    }).join(""));
+    }).join("")); // to exclude the "," between the items
 };
 
 populateShop();
@@ -73,40 +94,41 @@ let increment = (id) => {
     } else {
         search.item += 1;
     }
+    
+    update(selectedItem.id);
     localStorage.setItem("data", JSON.stringify(basket));
-/*     console.log(basket);
- */    update(selectedItem.id);
 };
 
 let decrement = (id) => {
     let selectedItem = id;
     let search = basket.find((x) => x.id === selectedItem.id);
-    if (search.item === 0)
-        return;
+
+    if (search === undefined)  return; //Check if basket is empty
+    else if (search.item === 0) return; //Check if  selected item is zero
     else {
         search.item -= 1;
     }
-    localStorage.setItem("data", JSON.stringify(basket));
-    /*     console.log(basket);
-     */
     update(selectedItem.id);
+    basket = basket.filter((x) => x.item !== 0);
+    localStorage.setItem("data", JSON.stringify(basket));
 };
 
 let update = (id) => {
     let search = basket.find((x) => x.id === id);
-
+    if (search === undefined) {
+        document.getElementById(id).innerText = 0;
+    } //Check if basket is empty
+    else{
     document.getElementById(id).innerText = search.item;
     calculation();      //sum the quantity of each item and update the cartAmount
     showBadge();    //Check if cart is empty. If it is no badge is shown
-};
+}};
 
 
 //Function to calculate the total quantity of items to put in the cart
 let calculation = () => {
     let cartIcon = document.getElementById("cartAmount");
-    let total = 0;
-    total = basket.map((x) => x.item).reduce((sum, item) => sum + item)
-    cartIcon.innerText = total;
+    cartIcon.innerText = basket.map((x) => x.item).reduce((sum, item) => sum + item, 0)  
 };
 
 
