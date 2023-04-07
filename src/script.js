@@ -1,57 +1,4 @@
 let shop = document.getElementById('shop');
-
-let shopItemsDatabase = [
-    {
-        id: "item1",
-        name: "sapato 1",
-        desc: "decricao do produto 1",
-        price: 55,
-        image: "img/p2.jpg"
-    },
-    {
-        id: "item2",
-        name: "sapato 2",
-        desc: "decricao do produto 2",
-        price: 255,
-        image: "img/p3.jpg"
-    },
-    {
-        id: "item3",
-        name: "sapato 3",
-        desc: "decricao do produto 3",
-        price: 155,
-        image: "img/p7.jpg"
-    },
-    {
-        id: "item4",
-        name: "sapato 4",
-        desc: "decricao do produto 4",
-        price: 85,
-        image: "img/p5.jpg"
-    },
-    {
-        id: "item5",
-        name: "sapato 5",
-        desc: "decricao do produto 5",
-        price: 85,
-        image: "img/p8.jpg"
-    },
-    {
-        id: "item6",
-        name: "sapato 6",
-        desc: "decricao do produto 6",
-        price: 85,
-        image: "img/p4.jpg"
-    },
-    {
-        id: "item7",
-        name: "sapato 7",
-        desc: "decricao do produto 7",
-        price: 85,
-        image: "img/p7.jpg"
-    }
-]
-
 let basket = JSON.parse(localStorage.getItem("data")) || [];
 
 let populateShop = () => {
@@ -141,7 +88,12 @@ function showBadge() {
         cartIcon.classList.add("shown");
     }
 };
-
+let stateCheck = setInterval(() => {
+    if (document.readyState === 'complete') {
+      clearInterval(stateCheck);
+      showBadge();
+    }
+  }, 500);
 //Call the cart check and calculation on page load
-showBadge();
+
 calculation();
